@@ -103,27 +103,30 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-primary-light'>
-        <div className='flex flex-col p-6 h-auto w-[350px] md:w-[400px] md:h-auto bg-primary-light rounded-lg shadow-md'>
-            <h1 className='text-center mb-4 font-body text-xl font-bold text-Heading'>Welcome To MyDuka!</h1>
-            <p className='text-center text-base text-Heading mb-4'>{'Let\'s Keep the Momentum Going'}</p>
+    <div className='flex items-center justify-center min-h-screen max-w-screen-2xl bg-primary light'>
+       <div className='container-2xl mx auto px-4 py-8 bg-white border p-2 rounded-[12px]'>
+       <div className='flex flex-col p-6 h-auto w-[350px] md:w-[400px] md:h-auto bg-primary-light rounded-lg shadow-md'>
+            <h1 className='text-center mb-4 font-body text-4xl font-bold text-Heading font-darker-grotesque text-gray-800'>MyDuk
+            <span className='relative right-15 w-1 h-2 font-darker-grotesque font-bold text-Heading text-red-600'>A</span>
+            </h1>
+            <p className='text-center text-base text-Heading mb-4 text-gray-800 font-darker-grotesque text-xl font-semibold'>{'Let\'s Keep the Momentum Going'}</p>
             <form className='flex flex-col space-y-6' onSubmit={handleSubmit}>
                 <input
-                    className='border p-2 rounded-[8px] outline-none text-Heading'
+                    className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white'
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <div className='relative border p-2 rounded-[8px]'>
+                <div className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white flex items-center'>
                     <input
-                        className=' text-Heading pr-10 outline-none'
+                        className='text-Heading pr-10 outline-none text-gray-800 bg-white flex-grow'
                         type={passwordVisible ? "text" : "password"}
                         placeholder="Password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
-                    <div className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5'>
+                    <div className='pr-3 flex items-center text-sm leading-5 text-red-600'>
                         {passwordVisible ? (
                             <PiEyeLight className='fill-Heading' onClick={togglePasswordVisibility} />
                         ) : (
@@ -132,13 +135,14 @@ const Login = () => {
                     </div>
                 </div>
                 <button
-                    className='bg-black text-primary-light p-2 rounded-[8px] mt-4'
+                    className='bg-gray-1000 text-primary-light p-2 rounded-[8px] mt-4 hover:bg-red-600 font-darker-grotesque font-semibold hover:text-white text-xl'
                     type="submit"
                 >
                     Sign in
                 </button>
             </form>
         </div>
+       </div>
     </div>
   );
 };
