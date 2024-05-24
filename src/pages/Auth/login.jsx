@@ -103,47 +103,45 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen max-w-screen-2xl bg-relative'>
-       
-       <div className='flex flex-col p-6 h-auto w-[350px] md:w-[400px] md:h-auto bg-primary-light rounded-lg shadow-md'>
-            <h1 className='text-center mb-4 font-body text-6xl font-normal text-Heading font-darker-grotesque text-gray-800'>MyDuk
-            <span className='relative right-15 w-1 h-2 font-darker-grotesque font-normal text-Heading text-red-600'>A</span>
-            </h1>
-            <p className='text-center text-base text-Heading mb-4 text-gray-800 font-darker-grotesque text-xl font-semibold'>{'Let\'s Keep the Momentum Going'}</p>
-            <form className='flex flex-col space-y-6' onSubmit={handleSubmit}>
-                <input
-                    className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white'
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
-                <div className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white flex items-center'>
+    <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+            <div className='flex flex-col p-6 w-full max-w-md bg-white rounded-lg max-h-96 shadow-md rounded-[12px]'>
+                <h1 className='text-center mb-4 font-body text-6xl font-normal font-medium text-Heading font-darker-grotesque text-black'>MyDuk
+                    <span className='relative right-15 w-1 h-2 font-darker-grotesque font-normal text-Heading text-red-600'>A</span>
+                </h1>
+                <p className='text-center text-2xl font-darker-grotesque font-semibold text-black mb-4'>Let's Keep the Momentum Going</p>
+                <form className='flex flex-col space-y-6' onSubmit={handleSubmit}>
                     <input
-                        className='text-Heading pr-10 outline-none text-gray-800 bg-white flex-grow'
-                        type={passwordVisible ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white'
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
-                    <div className='pr-3 flex items-center text-sm leading-5 text-red-600'>
-                        {passwordVisible ? (
-                            <PiEyeLight className='fill-Heading' onClick={togglePasswordVisibility} />
-                        ) : (
-                            <PiEyeSlash className='fill-Heading' onClick={togglePasswordVisibility} />
-                        )}
+                    <div className='border p-2 rounded-[8px] outline-none text-Heading font-medium text-gray-800 bg-opacity-100 bg-white flex items-center'>
+                        <input
+                            className='text-Heading pr-10 outline-none text-gray-800 bg-white flex-grow'
+                            type={passwordVisible ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <div className='pr-3 flex items-center text-sm leading-5 text-red-600'>
+                            {passwordVisible ? (
+                                <PiEyeLight className='fill-Heading' onClick={togglePasswordVisibility} />
+                            ) : (
+                                <PiEyeSlash className='fill-Heading' onClick={togglePasswordVisibility} />
+                            )}
+                        </div>
                     </div>
-                </div>
-                <button
-                    className='bg-gray-1000 text-primary-light p-2 rounded-[8px] mt-4 hover:bg-red-600 font-darker-grotesque font-semibold hover:text-white text-xl'
-                    type="submit"
-                >
-                    Sign in
-                </button>
-            </form>
+                    <button
+                        className='bg-gray-1000 text-primary-light p-2 rounded-[8px] mt-4 hover:bg-red-600 font-darker-grotesque font-semibold hover:text-white text-xl'
+                        type="submit"
+                    >
+                        Sign in
+                    </button>
+                </form>
+            </div>
         </div>
-       
-    </div>
   );
 };
 

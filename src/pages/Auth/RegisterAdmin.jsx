@@ -55,22 +55,25 @@ const RegisterAdmin = () => {
     };
 
     return (
-        <div className="container-2xl mx-auto p-4 bg-white border p-2 rounded-[12px]">
-            <h2 className="text-4xl font-body font-darker-grotesque font-medium text-gray-800 mb-4">REGISTER AS ADMIN</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="container-9xl  max-w-screen-lg mx-auto p-4 bg-gray-300 border p-2 rounded-[12px]">
+           <h1 className='text-center mb-4 font-body text-6xl font-normal text-Heading font-darker-grotesque text-gray-800'>MyDuk
+            <span className='relative right-15 w-1 h-2 font-darker-grotesque font-normal text-Heading text-red-600'>A</span>
+            </h1>
+            <h2 className="text-3xl font-body font-darker-grotesque max-w-screen-lg font-medium text-red-600 mb-4">REGISTER AS ADMIN</h2>
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-max ">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-gray-700">Name</label>
+                    <label htmlFor="name" className="block text-sm font-semibold font-darker-grotesque text-4xl text-gray-700">Name</label>
                     <input
                         type="text"
-                        id="name"
+                        id="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-600 focus:border-red-600 sm:text-sm bg-white text-gray-800"
                         required
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <label htmlFor="email" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-gray-700">Email</label>
                     <input
                         type="email"
                         id="email"
@@ -81,7 +84,7 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                    <label htmlFor="username" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-gray-700">Username</label>
                     <input
                         type="text"
                         id="username"
@@ -92,7 +95,7 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-gray-700">Password</label>
                     <input
                         type="password"
                         id="password"
@@ -103,12 +106,12 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
+                    <label htmlFor="image" className="block text-sm font-semibold font-darker-grotesque text-4.5xl text-gray-700">Profile Image</label>
                     <input
                         type="file"
                         id="image"
                         onChange={handleImageChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-black"
                         accept="image/*"
                     />
                 </div>
