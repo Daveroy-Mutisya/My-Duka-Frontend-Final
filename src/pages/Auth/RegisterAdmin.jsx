@@ -55,22 +55,27 @@ const RegisterAdmin = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Register as Admin</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className='text-center mb-4 font-body text-6xl font-normal text-Heading font-darker-grotesque text-black'>MyDuk
+          <span className='relative right-15 w-1 h-2 font-darker-grotesque font-normal text-Heading text-red-600'>A</span>
+        </h1>
+      
+        <div className="container-9xl max-w-full p-4 bg-white border p-2 rounded-[12px]">
+          <h2 className="text-3xl font-body font-darker-grotesque max-w-screen-lg font-medium text-red-600 mb-4 text-center">REGISTER AS ADMIN</h2>
+          <form onSubmit={handleSubmit} className="space-y-4 max-w-max">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                    <label htmlFor="name" className="block text-sm font-semibold font-darker-grotesque text-4xl text-black">Name</label>
                     <input
                         type="text"
-                        id="name"
+                        id="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-600 focus:border-red-600 sm:text-sm bg-white text-black"
                         required
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <label htmlFor="email" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-black">Email</label>
                     <input
                         type="email"
                         id="email"
@@ -81,7 +86,7 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                    <label htmlFor="username" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-black">Username</label>
                     <input
                         type="text"
                         id="username"
@@ -92,7 +97,7 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-black">Password</label>
                     <input
                         type="password"
                         id="password"
@@ -103,23 +108,24 @@ const RegisterAdmin = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
-                    <input
+                    <label htmlFor="image" className="block text-sm font-semibold font-darker-grotesque text-4.5xl text-black bg-white">Profile Image</label>
+                    <input 
                         type="file"
                         id="image"
                         onChange={handleImageChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm hover:bg-red-600  sm:text-sm sm:text-darker-grotesque text-xl text-darker-grotesque "
                         accept="image/*"
                     />
                 </div>
                 <div>
-                    <button type="submit" className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+                    <button type="submit" className="w-full px-4 py-2 bg-white text-black text-xl font-darker-grotesque font-semibold rounded-md hover:bg-red-600 hover:text-white focus:outline-none focus:bg-red-600 focus:text-white">
                         Register
                     </button>
                 </div>
             </form>
-            {message && <p className="mt-4 text-green-500">{message}</p>}
-            {error && <p className="mt-4 text-red-500">{error}</p>}
+            {message && <p className="mt-4 text-red-600 font-darker-grotesque text-xl text-center font-medium">{message}</p>}
+            {error && <p className="mt-4 text-red-600 font-darker-grotesque text-xl text-center font-medium">{error}</p>}
+            </div>
         </div>
     );
 };
