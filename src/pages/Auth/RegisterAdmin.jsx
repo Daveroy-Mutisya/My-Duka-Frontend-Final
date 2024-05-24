@@ -55,11 +55,11 @@ const RegisterAdmin = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Register as Admin</h2>
+        <div className="container-2xl mx-auto p-4 bg-white border p-2 rounded-[12px]">
+            <h2 className="text-4xl font-body font-darker-grotesque font-medium text-gray-800 mb-4">REGISTER AS ADMIN</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                    <label htmlFor="name" className="block text-sm font-semibold font-darker-grotesque text-3.5xl text-gray-700">Name</label>
                     <input
                         type="text"
                         id="name"

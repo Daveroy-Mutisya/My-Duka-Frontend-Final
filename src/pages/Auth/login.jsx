@@ -103,8 +103,8 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen max-w-screen-2xl bg-primary light'>
-       <div className='container-2xl mx auto px-4 py-8 bg-white border p-2 rounded-[12px]'>
+    <div className='flex items-center justify-center min-h-screen max-w-screen-2xl bg-relative'>
+       
        <div className='flex flex-col p-6 h-auto w-[350px] md:w-[400px] md:h-auto bg-primary-light rounded-lg shadow-md'>
             <h1 className='text-center mb-4 font-body text-6xl font-normal text-Heading font-darker-grotesque text-gray-800'>MyDuk
             <span className='relative right-15 w-1 h-2 font-darker-grotesque font-normal text-Heading text-red-600'>A</span>
@@ -142,7 +142,7 @@ const Login = () => {
                 </button>
             </form>
         </div>
-       </div>
+       
     </div>
   );
 };
