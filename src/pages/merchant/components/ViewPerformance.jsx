@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'; // using recharts for data gotten from the end points can be displayed in a graph format
+import Chart from 'chart.js/auto';
+import MerchantSideBar from "../MerchantSideBar";
 
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
@@ -31,33 +32,48 @@ function ViewPerformance() {
         fetchPerformance();
     }, [store_id]);
 
-    const data = performance ? [
-        { name: 'Total Revenue', value: performance.total_revenue },
-        { name: 'Total Profit', value: performance.total_profit },
-    ] : [];
+    useEffect(() => {
+        if (performance) {
+            const ctx = document.getElementById('performanceChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Revenue', 'Total Profit'],
+                    datasets: [{
+                        label: 'Performance',
+                        data: [performance.total_revenue, performance.total_profit],
+                        backgroundColor: ['#FF6384', '#36A2EB'],
+                        borderColor: ['#FF6384', '#36A2EB'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }, [performance]);
 
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="container mx-auto p-4 w-3/4 bg-white shadow-md rounded ml-[23%] h-[600px]"> {/* Adjust margin here */}
-                <h1 className="text-4xl font-bold mb-4">Store Performance</h1>
-                {error && <p className="text-red-500">{error}</p>}
-                {performance ? (
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="value" fill="#8884d8" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )}
+        <div className="flex">
+            <MerchantSideBar />
+            <div className="flex-grow">
+                <div className="container mx-auto flex flex-col h-full px-4 py-8">
+                    <h1 className="text-4xl font-bold mb-4">Store Performance</h1>
+                    {error && <p className="text-red-500">{error}</p>}
+                    {performance ? (
+                        <div className="flex-grow bg-white shadow-md rounded-lg p-4">
+                            <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </div>
             </div>
         </div>
     );
