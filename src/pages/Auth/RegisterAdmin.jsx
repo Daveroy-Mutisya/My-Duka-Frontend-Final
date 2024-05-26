@@ -36,7 +36,7 @@ const RegisterAdmin = () => {
             const response = await fetch(
                 `${BASE_URL}/store/${id}/register-admin?token=${token}`,
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     body: formData,
                 }
             );

@@ -9,12 +9,16 @@ import MerchantDashboard from './pages/merchant/MerchantDashboard';
 import InviteAdmin from './pages/merchant/components/InviteAdmin';
 import Stores from './pages/merchant/components/Stores';
 import AddProducts from './pages/clerk/components/AddProducts';
+import AdminManagement from './pages/merchant/components/AdminManagement';
+import ViewPerformance from './pages/merchant/components/ViewPerformance';
+import MerchantSideBar from './pages/merchant/components/MerchantSideBar';
 
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 function App() {
   return (
     <Router>
+      
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/merchant/dashboard" element={<MerchantDashboard />} />
@@ -24,6 +28,9 @@ function App() {
         <Route path="/merchant/store/:id/register-admin" element={<RegisterAdmin />} />
         <Route path="/merchant/stores" element={<Stores />} />
         <Route path="/clerk/register-product" element={<AddProducts />} />
+        <Route path="/merchant/admin-management" element={<AdminManagement />}/>
+        <Route path="/merchant/view-performance" element={<ViewPerformance />} />
+        <Route path="/merchant/merchant-sidebar" element={<MerchantSideBar />}/>
       </Routes>
     </Router>
   );

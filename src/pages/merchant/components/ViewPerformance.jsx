@@ -37,26 +37,28 @@ function ViewPerformance() {
     ] : [];
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-4xl font-bold mb-4">Store Performance</h1>
-            {error && <p className="text-red-500">{error}</p>}
-            {performance ? (
-                <div className="bg-white shadow-md rounded p-4">
-                    <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="value" fill="#8884d8" />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
+        <div className="flex justify-center items-center min-h-screen">
+            <div className="container mx-auto p-4 w-3/4 bg-white shadow-md rounded ml-[23%] h-[600px]"> {/* Adjust margin here */}
+                <h1 className="text-4xl font-bold mb-4">Store Performance</h1>
+                {error && <p className="text-red-500">{error}</p>}
+                {performance ? (
+                    <div>
+                        <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="value" fill="#8884d8" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
         </div>
     );
 }

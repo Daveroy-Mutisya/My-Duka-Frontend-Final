@@ -18,7 +18,7 @@ const Login = () => {
     const refreshToken = localStorage.getItem('refreshToken');
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/refresh-token', {
+      const response = await fetch('https://deploying-myduka-backend.onrender.com/refresh-token', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${refreshToken}`
@@ -56,7 +56,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/login', {
+      const response = await fetch('https://deploying-myduka-backend.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

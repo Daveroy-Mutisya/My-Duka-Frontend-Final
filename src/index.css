@@ -5,3 +5,6 @@
 @tailwind utilities;
 
 /* Custom styles */
+body {
+    font-family: 'Darker Grotesque', sans-serif;
+}

@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-import "./Stores.css";
 import { jwtDecode } from 'jwt-decode';
 
 function Stores() {
@@ -19,7 +17,7 @@ function Stores() {
             const decodedToken = jwtDecode(accessToken);
 
             // Fetch stores data from API using the access token
-            fetch("/stores/", {
+            fetch(`${BASE_URL}/stores`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
@@ -44,31 +42,39 @@ function Stores() {
     }, []);
 
     return (
-        <div className="store-table-container">
-            <h2 className="store-table-title">Stores</h2>
-            <table className="store-table">
+        <div className="flex justify-center items-center h-screen">
+        <div  className="max-w-full">
+        <div className="store-table-container mt-[-310px]">
+            <table className="store-table w-full max-w-md">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Image</th>
+                        <th className="px-4 py-12 text-3xl font-bold" colSpan="4">STORES</th>
+                    </tr>
+                    <tr>
+                        <th className="px-12 py-2">ID</th>
+                        <th className="px-12 py-2">Name</th>
+                        <th className="px-12 py-2">Location</th>
+                        <th className="px-12 py-2">Image</th>
                     </tr>
                 </thead>
                 <tbody>
                     {stores.map(store => (
                         <tr key={store.id}>
-                            <td>{store.id}</td>
-                            <td>{store.name}</td>
-                            <td>{store.location}</td>
-                            <td>{store.image}</td>
+                            <td className="border px-12 py-2">{store.id}</td>
+                            <td className="border px-12 py-2">{store.name}</td>
+                            <td className="border px-12 py-2">{store.location}</td>
+                            <td className="border px-12 py-2">{store.image}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+        </div>
+    </div>
+    
+
+
     );
 }
 
 export default Stores;
-
