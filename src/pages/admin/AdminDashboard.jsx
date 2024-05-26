@@ -1,52 +1,132 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'; // Import MUI Button
+import AdminSideBar from './components/AdminSideBar';
 
-const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
+function createData(name, price, stock_quantity, buying_price, selling_price, store_id, image) {
+  return { name, price, stock_quantity, buying_price, selling_price, store_id, image };
+}
 
-const AdminDashboard = () => {
-    const [payments, setPayments] = useState([]);
-    const [requests, setRequests] = useState([]);
+const rows = [
+  createData('Product Name 1', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+  createData('Product Name 2', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+  createData('Product Name 3', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+  createData('Product Name 4', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+  createData('Product Name 5', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+  createData('Product Name 6', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+];
 
-    useEffect(() => {
-        // Fetch all payments
-        fetch(`${BASE_URL}/store/all/payments`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => setPayments(data))
-        .catch(error => console.error('Error fetching payments:', error));
+export default function ClerkDashboard() {
+  const styles = {
+    container: {
+      display: 'flex',
+      maxWidth: '100%',
+      overflowX: 'hidden'
+    },
+    mainContent: {
+      flexGrow: 1,
+      padding: '20px',
+      marginLeft: '250px', // Adjusted to account for sidebar width
+    },
+    header: {
+      marginBottom: '20px',
+    },
+    headerInner: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#d32f2f', // Red background for the header
+      color: 'white',
+      padding: '10px',
+      borderRadius: '5px'
+    },
+    button: {
+      cursor: 'pointer',
+      textDecoration: 'none'
+    },
+    table: {
+      backgroundColor: '#ffffff', // White background for the table
+    },
+    tableHeader: {
+      backgroundColor: '#000000', // Black background for the header
+    },
+    tableCellHeader: {
+      color: '#d32f2f', // Red text color for the header
+      fontWeight: 'bold'
+    },
+    tableCell: {
+      color: '#000000', // Black text color for better contrast
+    },
+  };
 
-        // Fetch all requests
-        fetch(`${BASE_URL}/store/all/requests`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => setRequests(data.requests))
-        .catch(error => console.error('Error fetching requests:', error));
-    }, []);
-
-    return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
-            <h3 className="text-xl font-bold mb-2">Payments</h3>
-            <ul>
-                {payments.map((payment) => (
-                    <li key={payment.id}>{payment.method}: {payment.amount}</li>
-                ))}
-            </ul>
-            <h3 className="text-xl font-bold mb-2">Requests</h3>
-            <ul>
-                {requests.map((request) => (
-                    <li key={request.id}>
-                        {request.product_name} - {request.quantity} - {request.status}
-                    </li>
-                ))}
-            </ul>
+  return (
+    <div style={styles.container}>
+      <AdminSideBar />
+      <div style={styles.mainContent}>
+        <div style={styles.header}>
+          <div style={styles.headerInner}>
+            <div style={{ fontWeight: 'bold' }}>CLERK DASHBOARD</div>
+            <Link to="/admin/add-payments" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: '#b71c1c',
+                  color: 'white',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  '&:hover': {
+                    backgroundColor: '#8e0000'
+                  }
+                }}
+              >
+                Add Payments
+              </Button>
+            </Link>
+          </div>
         </div>
-    );
-};
-
-export default AdminDashboard;
+        <TableContainer component={Paper}>
+          <Table sx={styles.table} aria-label="simple table">
+            <TableHead sx={styles.tableHeader}>
+              <TableRow>
+                <TableCell sx={styles.tableCellHeader}>Name</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Stock Quantity</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Buying Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Selling Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Store ID</TableCell>
+                <TableCell align="center" sx={styles.tableCellHeader}>Image</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" sx={styles.tableCell}>
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{row.price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{row.stock_quantity}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{row.buying_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{row.selling_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{row.store_id}</TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>
+                    <img src={row.image} alt="product image" width="50px" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
+}
