@@ -21,7 +21,7 @@ function MerchantSideBar() {
                     </Link>
                 </li>
                 <li className="sidebar-item">
-                    <Link to="/merchant/invite-admin" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300">
+                    <Link to="/merchant/register" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300">
                         Invite Admin
                     </Link>
                 </li>

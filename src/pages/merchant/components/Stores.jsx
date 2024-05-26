@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from 'jwt-decode';
 
+export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
+
 function Stores() {
     const [stores, setStores] = useState([]);
 

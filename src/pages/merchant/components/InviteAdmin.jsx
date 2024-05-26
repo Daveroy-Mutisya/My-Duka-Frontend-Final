@@ -27,7 +27,7 @@ const InviteAdmin = () => {
     
             const { accessToken } = await loginResponse.json();
     
-            const inviteResponse = await fetch(`${BASE_URL}/invite-admin`, {
+            const inviteResponse = await fetch(`${BASE_URL}/register`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
