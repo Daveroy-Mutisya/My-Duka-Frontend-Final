@@ -1,4 +1,5 @@
-import * as React from 'react';
+// src/pages/clerk/ClerkDashboard.jsx
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,27 +8,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'; // Import MUI Button
+import Button from '@mui/material/Button';
 
-function createData(name, price, stock_quantity, buying_price, selling_price, store_id, image) {
-  return { name, price, stock_quantity, buying_price, selling_price, store_id, image };
-}
-
-const rows = [
-  createData('Product Name 1', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 2', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 3', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 4', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 5', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 6', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-];
+// Define the base URL for the API
+export const BASE_URL = 'http://127.0.0.1:5000';
 
 export default function ClerkDashboard() {
+  // State hook to store the list of products
+  const [products, setProducts] = useState([]);
+
+  // Effect hook to fetch products when the component mounts
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch(`${BASE_URL}/store/products`, {  // Correctly using template literals
+      headers: {
+        'Authorization': `Bearer ${token}`,  // Correctly using template literals
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProducts(data);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
+
+  // Styles for the component
   const styles = {
     container: {
       padding: "20px",
       maxWidth: "100%",
-      overflowX: "hidden"
+      overflowX: "hidden",
     },
     header: {
       marginBottom: "20px",
@@ -39,25 +57,26 @@ export default function ClerkDashboard() {
       backgroundColor: "#2196f3",
       color: "white",
       padding: "10px",
-      borderRadius: "5px"
+      borderRadius: "5px",
     },
     button: {
       cursor: "pointer",
-      textDecoration: "none"
+      textDecoration: "none",
     },
     table: {
-      backgroundColor: "#f5f5f5", // Light grey background for the table
+      backgroundColor: "#f5f5f5",
     },
     tableHeader: {
-      backgroundColor: "#e0e0e0", // Slightly darker grey for the header
+      backgroundColor: "#e0e0e0",
     },
     tableCell: {
-      color: "#333", // Dark grey text color for better contrast
+      color: "#333",
     },
   };
 
   return (
     <div style={styles.container}>
+      {/* Header section with a title and a button to add a new product */}
       <div style={styles.header}>
         <div style={styles.headerInner}>
           <div style={{ fontWeight: "bold" }}>My Products</div>
@@ -79,6 +98,8 @@ export default function ClerkDashboard() {
           </Link>
         </div>
       </div>
+
+      {/* Table to display the list of products */}
       <TableContainer component={Paper}>
         <Table sx={styles.table} aria-label="simple table">
           <TableHead sx={styles.tableHeader}>
@@ -93,21 +114,22 @@ export default function ClerkDashboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {/* Map over the products and create a table row for each product */}
+            {products.map((product) => (
               <TableRow
-                key={row.name}
+                key={product.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row" sx={styles.tableCell}>
-                  {row.name}
+                  {product.name}
                 </TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.stock_quantity}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.buying_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.selling_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.store_id}</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>{product.price}</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>{product.stock_quantity}</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>{product.buying_price}</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>{product.selling_price}</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>{product.store_id}</TableCell>
                 <TableCell align="center" sx={styles.tableCell}>
-                  <img src={row.image} alt="product image" width="50px" />
+                  <img src={product.image} alt="product" width="50px" />
                 </TableCell>
               </TableRow>
             ))}
