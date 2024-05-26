@@ -22,43 +22,43 @@ export default function ClerkDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(`${BASE_URL}/store/products`, {  // Remove the store ID from the URL
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        }
+    fetch(`${BASE_URL}/store/products`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            setProducts(data);
-        })
-        .catch(error => {
-            console.error('Error fetching products:', error);
-        });
-}, []);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setProducts(data);
+    })
+    .catch(error => {
+      console.error('Error fetching products:', error);
+    });
+  }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (storeId, productId) => {
     const token = localStorage.getItem('token');
 
-    fetch(`${BASE_URL}/store/products/${id}`, {
+    fetch(`${BASE_URL}/store/${storeId}/products/${productId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        setProducts(products.filter(product => product.id !== id));
-      })
-      .catch(error => {
-        console.error('Error deleting product:', error);
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setProducts(products.filter(product => product.id !== productId));
+    })
+    .catch(error => {
+      console.error('Error deleting product:', error);
+    });
   };
 
   // Styles for the component
@@ -75,10 +75,14 @@ export default function ClerkDashboard() {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      backgroundColor: "#2196f3",
+      backgroundColor: "black", // Set the container color to black
       color: "white",
       padding: "10px",
       borderRadius: "5px"
+    },
+    headerTitle: {
+      fontWeight: "bold",
+      color: "white" // Set the text color of "My Products" to white
     },
     button: {
       cursor: "pointer",
@@ -93,6 +97,18 @@ export default function ClerkDashboard() {
     tableCell: {
       color: "#333",
     },
+    deleteButton: {
+      color: "#b91c1c" // Set the delete icon color to red-700
+    },
+    addButton: {
+      backgroundColor: "#b91c1c", // Set the "Add Product" button color to red-700
+      color: "white",
+      borderRadius: "8px",
+      padding: "8px 16px",
+      '&:hover': {
+        backgroundColor: "#991b1b" // Darker red for hover state
+      }
+    }
   };
 
   return (
@@ -100,19 +116,11 @@ export default function ClerkDashboard() {
       {/* Header section with a title and a button to add a new product */}
       <div style={styles.header}>
         <div style={styles.headerInner}>
-          <div style={{ fontWeight: "bold" }}>My Products</div>
+          <div style={styles.headerTitle}>My Products</div>
           <Link to="/clerk/register-product" style={{ textDecoration: "none" }}>
             <Button
               variant="contained"
-              sx={{
-                backgroundColor: "#007FFF",
-                color: "white",
-                borderRadius: "8px",
-                padding: "8px 16px",
-                '&:hover': {
-                  backgroundColor: "#0066CC"
-                }
-              }}
+              sx={styles.addButton} // Apply red color to the button
             >
               Add Product
             </Button>
@@ -155,8 +163,8 @@ export default function ClerkDashboard() {
                 </TableCell>
                 <TableCell align="center" sx={styles.tableCell}>
                   <IconButton 
-                    onClick={() => handleDelete(product.id)} 
-                    color="secondary"
+                    onClick={() => handleDelete(product.store_id, product.id)} 
+                    sx={styles.deleteButton} // Apply red color to delete button
                   >
                     <DeleteIcon />
                   </IconButton>

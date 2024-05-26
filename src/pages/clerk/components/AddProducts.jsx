@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import { FormControl, useFormControlContext } from '@mui/base/FormControl';
 import { Input, inputClasses } from '@mui/base/Input';
 import { styled } from '@mui/system';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import clsx from 'clsx';
 
 export default function AddProducts() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const [productName, setProductName] = React.useState('');
   const [price, setPrice] = React.useState('');
@@ -18,7 +18,7 @@ export default function AddProducts() {
   const [imageUrl, setImageUrl] = React.useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     console.log({
       productName,
       price,
@@ -28,7 +28,7 @@ export default function AddProducts() {
       storeId,
       imageUrl
     });
-    navigate('/clerk/dashboard'); // Navigate to /Products route
+    navigate('/clerk/dashboard');
   };
 
   return (
@@ -63,9 +63,11 @@ export default function AddProducts() {
           <StyledInput placeholder="Image URL (from Google)" />
         </FormControl>
         <HelperText />
-        <Button type="submit" variant="contained" disableElevation>
-          Submit
-        </Button>
+        <ButtonContainer>
+          <Button type="submit" variant="contained" disableElevation>
+            Submit
+          </Button>
+        </ButtonContainer>
       </form>
     </StyledDiv>
   );
@@ -78,32 +80,30 @@ const StyledDiv = styled('div')`
   margin: auto;
   border-radius: 8px;
   box-sizing: border-box;
-  max-height: 90vh; /* Ensure the container fits within the viewport */
-  overflow-y: auto; /* Make the container scrollable */
+  max-height: 90vh;
+  overflow-y: auto;
 
-  /* Hide the scrollbar initially */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: transparent transparent; /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 
   &::-webkit-scrollbar {
-    width: 8px; /* Set the width of the scrollbar */
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: transparent; /* Make scrollbar thumb transparent */
+    background-color: transparent;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2); /* Show scrollbar thumb on hover */
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   &:hover::-webkit-scrollbar {
-    width: 8px; /* Show scrollbar on hover */
+    width: 8px;
   }
 
-  /* Ensure it works on older versions of Safari and other webkit browsers */
   &::-webkit-scrollbar-track {
-    background: transparent; /* Make scrollbar track transparent */
+    background: transparent;
   }
 `;
 
@@ -213,3 +213,9 @@ const grey = {
   800: '#303740',
   900: '#1C2025',
 };
+
+const ButtonContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+`;
