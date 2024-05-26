@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // Define the base URL for the API
 export const BASE_URL = 'http://127.0.0.1:5000';
@@ -38,6 +40,26 @@ export default function ClerkDashboard() {
             console.error('Error fetching products:', error);
         });
 }, []);
+
+  const handleDelete = (id) => {
+    const token = localStorage.getItem('token');
+
+    fetch(`${BASE_URL}/store/products/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        setProducts(products.filter(product => product.id !== id));
+      })
+      .catch(error => {
+        console.error('Error deleting product:', error);
+      });
+  };
 
   // Styles for the component
   const styles = {
@@ -110,6 +132,7 @@ export default function ClerkDashboard() {
               <TableCell align="right" sx={styles.tableCell}>Selling Price ($)</TableCell>
               <TableCell align="right" sx={styles.tableCell}>Store ID</TableCell>
               <TableCell align="center" sx={styles.tableCell}>Image</TableCell>
+              <TableCell align="center" sx={styles.tableCell}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -129,6 +152,14 @@ export default function ClerkDashboard() {
                 <TableCell align="right" sx={styles.tableCell}>{product.store_id}</TableCell>
                 <TableCell align="center" sx={styles.tableCell}>
                   <img src={product.image} alt="product image" width="50px" />
+                </TableCell>
+                <TableCell align="center" sx={styles.tableCell}>
+                  <IconButton 
+                    onClick={() => handleDelete(product.id)} 
+                    color="secondary"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}

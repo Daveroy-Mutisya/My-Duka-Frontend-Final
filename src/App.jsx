@@ -9,7 +9,7 @@ import MerchantDashboard from './pages/merchant/MerchantDashboard';
 import InviteAdmin from './pages/merchant/components/InviteAdmin';
 import Stores from './pages/merchant/components/Stores';
 import AddProducts from './pages/clerk/components/AddProducts';
-
+import AddClerk from './pages/admin/ClerkManagement';
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
         <Route path="/merchant/store/:id/register-admin" element={<RegisterAdmin />} />
         <Route path="/merchant/stores" element={<Stores />} />
         <Route path="/clerk/register-product" element={<AddProducts />} />
+        <Route path="/admin/add-clerk" element={<AddClerk />} />
       </Routes>
     </Router>
   );
