@@ -13,7 +13,7 @@ function ViewPerformance() {
     useEffect(() => {
         const fetchPerformance = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/store/${store_id}/performance`, {
+                const response = await fetch(`https://deploying-myduka-backend.onrender.com/store/1/performance/store`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
