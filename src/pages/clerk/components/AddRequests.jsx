@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,8 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import ClerkSideBar from './ClerkSideBar'; // Import AdminSideBar
 
-export const BASE_URL = 'http://127.0.0.1:5000';
+export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 export default function AddRequestTable({ store_id, fetchRequests }) {
   const [formData, setFormData] = useState({
@@ -29,10 +29,18 @@ export default function AddRequestTable({ store_id, fetchRequests }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Form data:', formData);
+
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found in local storage');
+        return;
+      }
+
       const response = await axios.post(`${BASE_URL}/store/${store_id}/requests`, formData, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
@@ -47,62 +55,81 @@ export default function AddRequestTable({ store_id, fetchRequests }) {
         status: 'pending' // Reset status to default
       });
     } catch (error) {
-      console.error('Error adding request:', error);
+      console.error('Error:', error.message);
     }
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Requester</TableCell>
-            <TableCell>Contact</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <TextField
-                name="product_name"
-                value={formData.product_name}
-                onChange={handleChange}
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                name="requester_name"
-                value={formData.requester_name}
-                onChange={handleChange}
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                name="requester_contact"
-                value={formData.requester_contact}
-                onChange={handleChange}
-              />
-            </TableCell>
-            <TableCell>{formData.status}</TableCell>
-            <TableCell>
-              <Button variant="contained" color="primary" onClick={handleSubmit}>
-                Add
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div>
+        <ClerkSideBar />
+      </div>
+      <div>
+        <TableContainer component={Paper} className="bg-white p-8 rounded-lg">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Field</TableCell>
+                <TableCell>Input</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Product</TableCell>
+                <TableCell>
+                  <TextField
+                    name="product_name"
+                    value={formData.product_name}
+                    onChange={handleChange}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Quantity</TableCell>
+                <TableCell>
+                  <TextField
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Requester</TableCell>
+                <TableCell>
+                  <TextField
+                    name="requester_name"
+                    value={formData.requester_name}
+                    onChange={handleChange}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Contact</TableCell>
+                <TableCell>
+                  <TextField
+                    name="requester_contact"
+                    value={formData.requester_contact}
+                    onChange={handleChange}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Status</TableCell>
+                <TableCell>{formData.status}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Action</TableCell>
+                <TableCell>
+                  <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    Add
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
   );
 }

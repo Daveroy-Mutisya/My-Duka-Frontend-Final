@@ -6,7 +6,7 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import clsx from 'clsx';
 import axios from 'axios'; // Import axios for HTTP requests
-
+import ClerkSideBar from './ClerkSideBar';
 
 // Define the base URL for the API
 export const BASE_URL = 'http://127.0.0.1:5000';
@@ -122,7 +122,7 @@ const StyledDiv = styled('div')`
   background-color: #DAECFF;
   padding: 16px;
   max-width: 360px;
-  margin: auto;
+  margin: 50px auto; /* Added top margin */
   border-radius: 8px;
   box-sizing: border-box;
   max-height: 90vh; /* Ensure the container fits within the viewport */
