@@ -28,7 +28,12 @@ function MerchantSideBar() {
                     </li>
                     <li className="sidebar-item">
                         <Link to="/merchant/view-performance" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-                            View Performance
+                            View Performance of store
+                        </Link>
+                    </li>
+                    <li className="sidebar-item">
+                        <Link to="/merchant/view-performance-product" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
+                            View Performance of product
                         </Link>
                     </li>
                     <li className="sidebar-item">

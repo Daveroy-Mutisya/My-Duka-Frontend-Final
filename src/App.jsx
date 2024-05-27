@@ -12,6 +12,7 @@ import AddProducts from './pages/clerk/components/AddProducts';
 import AdminManagement from './pages/merchant/components/AdminManagement';
 import ViewPerformance from './pages/merchant/components/ViewPerformance';
 import MerchantSideBar from './pages/merchant/MerchantSideBar';
+import ViewPerformanceProduct from './pages/merchant/components/ViewPerformanceProducts';
 
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/clerk/register-product" element={<AddProducts />} />
         <Route path="/merchant/admin-management" element={<AdminManagement />} />
         <Route path="/merchant/view-performance" element={<ViewPerformance />} />
+        <Route path="/merchant/view-performance-product"  element={<ViewPerformanceProduct/>}/>
       </Routes>
     </Router>
   );
