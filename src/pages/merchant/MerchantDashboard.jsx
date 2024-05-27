@@ -46,15 +46,15 @@ export default function MerchantDashboard() {
             <div className="flex-none">
                 <MerchantSideBar />
             </div>
-            <div className="flex-grow flex flex-col items-center justify-center" style={{ marginTop: '-150px' }}>
+            <div className="flex-grow flex flex-col items-center justify-center" style={{ marginTop: '-300px' }}>
                 <div className="invite-admin-container-lg flex flex-col items-center justify-center  m-0.5" style={{ width: '600px' }}>
-                    <h2 className="invite-admin-title text-2xl mb-4 font-bold">Merchant Dashboard</h2>
+                    <h2 className="invite-admin-title text-5xl mb-4 font-bold">Merchant Dashboard</h2>
                     {error && <p className="text-red-500">{error}</p>}
                     <table className="min-w-full bg-white shadow-md rounded-lg">
                         <thead>
                             <tr>
-                                <th className="py-2 px-4 border-b">Store Name</th>
-                                <th className="py-2 px-4 border-b">Location</th>
+                                <th className="py-2 px-4 border-b text-red-600">Store Name</th>
+                                <th className="py-2 px-4 border-b text-red-600">Location</th>
                             </tr>
                         </thead>
                         <tbody>
