@@ -6,8 +6,8 @@ const AdminSideBar = () => {
         <div style={{
             width: '250px',
             height: '100vh',
-            backgroundColor: '#1a202c',
-            color: 'white',
+            backgroundColor: '#FFFFFF',
+            color: 'Black',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

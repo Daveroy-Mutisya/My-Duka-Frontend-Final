@@ -3,8 +3,10 @@ import AdminSideBar from './components/AdminSideBar';
 
 const ClerkManagement = () => {
     const [clerks, setClerks] = useState([
-        { id: 1, fullName: 'Teddy Maina', username: 'Teddy', email: 'mainateddy9@gmail.com', password: 'password123', role: 'Clerk' },
-        { id: 2, fullName: 'Brian Murigi', username: 'Brian', email: 'brianmurigi9@gmail.com', password: 'password456', role: 'Clerk' },
+        { id: 1, fullName: 'Teddy Maina', username: 'Teddy', email: 'mainateddy9@gmail.com', password: 'clerk1@pass', role: 'Clerk' },
+        { id: 2, fullName: 'Brian Murigi', username: 'Brian', email: 'brianmurigi9@gmail.com', password: 'clerk2@pass', role: 'Clerk' },
+        { id: 3, fullName: 'Victor Leyian', username: 'VLeyian', email: 'leyianv360@gmail.com', password: 'clerk3@pass', role: 'Clerk' },
+
     ]);
 
     const deleteClerk = (id) => {
@@ -15,7 +17,7 @@ const ClerkManagement = () => {
         <div style={{ display: 'flex' }}>
             <AdminSideBar />
             <div style={{ marginLeft: '250px', padding: '2rem', width: '100%' }}>
-                <h1 style={{ color: 'red' }}>Clerk Management</h1>
+                <h1 style={{ color: 'Black' }}></h1>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead style={{ backgroundColor: 'black', color: 'white' }}>
                         <tr>
@@ -39,7 +41,7 @@ const ClerkManagement = () => {
                                     <button
                                         onClick={() => deleteClerk(clerk.id)}
                                         style={{
-                                            backgroundColor: 'red',
+                                            backgroundColor: '#e53e3e',
                                             color: 'white',
                                             padding: '5px 10px',
                                             borderRadius: '5px',

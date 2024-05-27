@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,23 +7,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'; // Import MUI Button
+import Button from '@mui/material/Button';
 import AdminSideBar from './components/AdminSideBar';
 
-function createData(name, price, stock_quantity, buying_price, selling_price, store_id, image) {
-  return { name, price, stock_quantity, buying_price, selling_price, store_id, image };
-}
-
-const rows = [
-  createData('Product Name 1', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
-  createData('Product Name 2', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
-  createData('Product Name 3', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
-  createData('Product Name 4', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
-  createData('Product Name 5', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
-  createData('Product Name 6', 99.99, 100, 50.00, 99.99, '', 'path_to_image'),
+const initialPayments = [
+  { id: 1, productName: 'Milk', storeId: 1, status: 'Paid', amount: 100, method: 'Credit Card', dueDate: '2024-05-28' },
+  { id: 2, productName: 'Salt', storeId: 2, status: 'not paid', amount: 150, method: 'PayPal', dueDate: '2024-05-30' },
+  { id: 3, productName: 'Bread', storeId: 3, status: 'Paid', amount: 200, method: 'cash', dueDate: '2024-06-01' },
 ];
 
 export default function ClerkDashboard() {
+  const [payments, setPayments] = useState(initialPayments);
+
+  const handleDelete = (id) => {
+    setPayments(payments.filter(payment => payment.id !== id));
+  };
+
   const styles = {
     container: {
       display: 'flex',
@@ -40,12 +39,13 @@ export default function ClerkDashboard() {
     },
     headerInner: {
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: '#d32f2f', // Red background for the header
+      justifyContent: 'center', // Align the text at the center
+      backgroundColor: '#000000', // Red background for the header
       color: 'white',
       padding: '10px',
-      borderRadius: '5px'
+      borderRadius: '5px',
+      width: 'fit-content', // Adjust the width to fit the content
+      margin: '0 auto', // Center the header text
     },
     button: {
       cursor: 'pointer',
@@ -58,11 +58,15 @@ export default function ClerkDashboard() {
       backgroundColor: '#000000', // Black background for the header
     },
     tableCellHeader: {
-      color: '#d32f2f', // Red text color for the header
+      color: '#FFFFFF', // Red text color for the header
       fontWeight: 'bold'
     },
     tableCell: {
       color: '#000000', // Black text color for better contrast
+    },
+    deleteButton: {
+      backgroundColor: 'red', // Red background for the delete button
+      color: 'white', // White text color for better contrast
     },
   };
 
@@ -73,53 +77,36 @@ export default function ClerkDashboard() {
         <div style={styles.header}>
           <div style={styles.headerInner}>
             <div style={{ fontWeight: 'bold' }}>CLERK DASHBOARD</div>
-            <Link to="/admin/add-payments" style={{ textDecoration: 'none' }}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: '#b71c1c',
-                  color: 'white',
-                  borderRadius: '8px',
-                  padding: '8px 16px',
-                  '&:hover': {
-                    backgroundColor: '#8e0000'
-                  }
-                }}
-              >
-                Add Payments
-              </Button>
-            </Link>
           </div>
         </div>
         <TableContainer component={Paper}>
           <Table sx={styles.table} aria-label="simple table">
             <TableHead sx={styles.tableHeader}>
               <TableRow>
-                <TableCell sx={styles.tableCellHeader}>Name</TableCell>
-                <TableCell align="right" sx={styles.tableCellHeader}>Price ($)</TableCell>
-                <TableCell align="right" sx={styles.tableCellHeader}>Stock Quantity</TableCell>
-                <TableCell align="right" sx={styles.tableCellHeader}>Buying Price ($)</TableCell>
-                <TableCell align="right" sx={styles.tableCellHeader}>Selling Price ($)</TableCell>
+                <TableCell sx={styles.tableCellHeader}>Product Name</TableCell>
                 <TableCell align="right" sx={styles.tableCellHeader}>Store ID</TableCell>
-                <TableCell align="center" sx={styles.tableCellHeader}>Image</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Status</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Amount</TableCell>
+                <TableCell align="right" sx={styles.tableCellHeader}>Method</TableCell>
+                <TableCell align="center" sx={styles.tableCellHeader}>Due Date</TableCell>
+                <TableCell align="center" sx={styles.tableCellHeader}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+              {payments.map((payment) => (
+                <TableRow key={payment.id}>
                   <TableCell component="th" scope="row" sx={styles.tableCell}>
-                    {row.name}
+                    {payment.productName}
                   </TableCell>
-                  <TableCell align="right" sx={styles.tableCell}>{row.price}</TableCell>
-                  <TableCell align="right" sx={styles.tableCell}>{row.stock_quantity}</TableCell>
-                  <TableCell align="right" sx={styles.tableCell}>{row.buying_price}</TableCell>
-                  <TableCell align="right" sx={styles.tableCell}>{row.selling_price}</TableCell>
-                  <TableCell align="right" sx={styles.tableCell}>{row.store_id}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{payment.storeId}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{payment.status}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{payment.amount}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{payment.method}</TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>{payment.dueDate}</TableCell>
                   <TableCell align="center" sx={styles.tableCell}>
-                    <img src={row.image} alt="product image" width="50px" />
+                    <Button onClick={() => handleDelete(payment.id)} variant="contained" style={styles.deleteButton}>
+                      Delete
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

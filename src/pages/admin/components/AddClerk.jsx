@@ -41,7 +41,7 @@ const AddClerk = () => {
                 padding: '2rem',
                 width: '100%',
                 minHeight: '100vh',
-                backgroundColor: '#2d3748',
+                backgroundColor: '#FFFFFF',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -51,7 +51,7 @@ const AddClerk = () => {
                 <div style={{
                     maxWidth: '50rem',
                     width: '100%',
-                    backgroundColor: '#1a202c',
+                    backgroundColor: '#FFFFFF',
                     padding: '2.5rem',
                     borderRadius: '0.5rem',
                     boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
@@ -62,7 +62,7 @@ const AddClerk = () => {
                             textAlign: 'center',
                             fontSize: '2rem',
                             fontWeight: '800',
-                            color: 'white'
+                            color: 'Black'
                         }}>New Clerk Registration</h2>
                     </div>
                     <form style={{ marginTop: '2rem', display: 'grid', gridGap: '1.5rem' }} onSubmit={handleSubmit}>
@@ -166,7 +166,7 @@ const AddClerk = () => {
                                 justifyContent: 'center',
                                 padding: '0.5rem 1rem',
                                 borderRadius: '0.375rem',
-                                backgroundColor: '#4299e1',
+                                backgroundColor: '#e53e3e  ',
                                 color: 'white',
                                 fontSize: '0.875rem',
                                 fontWeight: '500',
@@ -179,26 +179,7 @@ const AddClerk = () => {
                                 Register
                             </button>
 
-                            <Link to="/admin/clerk-management" style={{ textDecoration: 'none' }}>
-                            <button type="submit" style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '0.375rem',
-                                backgroundColor: '#4299e1',
-                                color: 'white',
-                                fontSize: '0.875rem',
-                                fontWeight: '500',
-                                lineHeight: '1.25rem',
-                                borderColor: 'transparent',
-                                cursor: 'pointer',
-                                outline: 'none',
-                                hover: { backgroundColor: '#3182ce' }
-                            }}>
-                                Clerk List
-                            </button>
-                            </Link>
-                            
+                           
                     
                         
                         </div>

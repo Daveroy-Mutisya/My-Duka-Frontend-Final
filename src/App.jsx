@@ -32,13 +32,13 @@ function App() {
         <Route path="/merchant/store/:id/register-admin" element={<RegisterAdmin />} />
         <Route path="/merchant/stores" element={<Stores />} />
         <Route path="/admin/add-clerk" element={<AddClerk />} />
-        
         <Route path="/admin/add-payments" element={<AddPayments />} />
         <Route path="/admin/clerk-management" element={<ClerkManagement />} /> 
         <Route path="/clerk/register-product" element={<AddProducts />} />
         <Route path="/merchant/admin-management" element={<AdminManagement />} />
         <Route path="/merchant/view-performance" element={<ViewPerformance />} />
         <Route path="/merchant/view-performance-product"  element={<ViewPerformanceProduct/>}/>
+        <Route path="/clerk/dashboard" element={<ClerkDashboard />} />
       </Routes>
     </Router>
   );
