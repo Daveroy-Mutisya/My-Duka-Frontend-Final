@@ -7,6 +7,7 @@ const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 export default function MerchantDashboard() {
     const [stores, setStores] = useState([]);
+    const [error, setError] = useState('');
     const navigate = useNavigate(); // Use the useNavigate hook from react-router-dom
 
     useEffect(() => {
@@ -30,54 +31,48 @@ export default function MerchantDashboard() {
                 console.error('Unexpected response format:', data);
             }
         })
-        .catch(error => console.error('Error fetching stores:', error));
+        .catch(error => {
+            console.error('Error fetching stores:', error);
+            setError('Failed to fetch stores');
+        });
     }, []);
 
     const handleStoreClick = (storeId) => {
-        navigate(`merchant/storedetails/${storeId}`);
+        navigate(`/merchant/storedetails/${storeId}`);
     };
 
     return (
-        <div className="flex items-center justify-center w-full">
-        {isMobile ? ( // Conditionally render the sidebar based on the device type
-            <MerchantSideBar />
-        ) : (
-            <div className="flex justify-between w-full">
-                <div className="flex">
-                    <MerchantSideBar />
-                </div>
-                <div className="invite-admin-container-lg flex flex-col items-center justify-center shadow-md m-0.5" style={{ width: '600px' }}>
-                    <h2 className="invite-admin-title text-2xl mb-4 font-bold">Merchant Dashboard</h2>
-                    <Link to="/store-details" className="text-white bg-red-700 px-3 py-1 rounded-md inline-block mb-2 font-medium hover:bg-red-800" style={{ fontSize: '14px' }}>
-                        Store Details
-                    </Link>
-                    <div className="grid grid-cols-2 gap-x-0 gap-y-0 justify-center">
-                        {stores.map(store => (
-                            <div
-                                key={store.id}
-                                className="border rounded-lg shadow-md p-4 cursor-pointer"
-                                onClick={() => handleStoreClick(store.id)}
-                                style={{ maxWidth: '150px', minWidth: '150px', marginLeft: '50px', marginRight: '70px' }} // Adjust the maximum and minimum width here
-                            >
-                                <img
-                                    src={store.image}
-                                    alt={store.name}
-                                    className="w-full h-32 object-cover rounded-t-lg"
-                                />
-                                <div className="p-2">
-                                    <h3 className="text-lg font-bold">{store.name}</h3>
-                                    <p className="text-gray-600">{store.location}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="flex-grow"></div>
+        <div className="flex w-full h-screen">
+            <div className="flex-none">
+                <MerchantSideBar />
             </div>
-        )}
-    </div>
+            <div className="flex-grow flex flex-col items-center justify-center" style={{ marginTop: '-150px' }}>
+                <div className="invite-admin-container-lg flex flex-col items-center justify-center  m-0.5" style={{ width: '600px' }}>
+                    <h2 className="invite-admin-title text-2xl mb-4 font-bold">Merchant Dashboard</h2>
+                    {error && <p className="text-red-500">{error}</p>}
+                    <table className="min-w-full bg-white shadow-md rounded-lg">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4 border-b">Store Name</th>
+                                <th className="py-2 px-4 border-b">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {stores.map(store => (
+                                <tr key={store.id} className="cursor-pointer" onClick={() => handleStoreClick(store.id)}>
+                                    <td className="py-2 px-4 border-b">{store.name}</td>
+                                    <td className="py-2 px-4 border-b">{store.location}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     );
 }
+
+
 
 
  

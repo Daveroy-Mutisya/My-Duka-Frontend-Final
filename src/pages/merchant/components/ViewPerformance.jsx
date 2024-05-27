@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Chart from 'chart.js/auto';
 import MerchantSideBar from "../MerchantSideBar";
@@ -9,6 +9,8 @@ function ViewPerformance() {
     const { store_id } = useParams();
     const [performance, setPerformance] = useState(null);
     const [error, setError] = useState('');
+    const chartRef = useRef(null);
+    const chartInstance = useRef(null);
 
     useEffect(() => {
         const fetchPerformance = async () => {
@@ -34,8 +36,15 @@ function ViewPerformance() {
 
     useEffect(() => {
         if (performance) {
-            const ctx = document.getElementById('performanceChart');
-            new Chart(ctx, {
+            const ctx = chartRef.current;
+
+            // Destroy the existing chart instance if it exists
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
+            }
+
+            // Create a new chart instance
+            chartInstance.current = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Total Revenue', 'Total Profit'],
@@ -56,6 +65,13 @@ function ViewPerformance() {
                 }
             });
         }
+
+        // Cleanup function to destroy the chart instance on unmount
+        return () => {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
+            }
+        };
     }, [performance]);
 
     return (
@@ -68,7 +84,7 @@ function ViewPerformance() {
                     {performance ? (
                         <div className="flex-grow bg-white shadow-md rounded-lg p-4">
                             <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
-                            <canvas id="performanceChart"></canvas>
+                            <canvas id="performanceChart" ref={chartRef}></canvas>
                         </div>
                     ) : (
                         <p>Loading...</p>
@@ -80,3 +96,8 @@ function ViewPerformance() {
 }
 
 export default ViewPerformance;
+
+
+
+
+

@@ -11,12 +11,12 @@ function MerchantSideBar() {
 
     return (
         <div>
-            <div className="md:hidden p-4 bg-black text-white flex justify-between items-center"> {/* Change background color to white */}
+            <div className="md:hidden p-4 bg-white text-black flex justify-between items-center"> {/* Change background color to white */}
                 <button onClick={toggleSidebar} className="text-black"> {/* Change text color to black */}
                     {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
                 </button>
             </div>
-            <div className={`fixed inset-y-0 left-0 bg-black text-white p-6 w-64 h-screen shadow transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out md:relative md:flex md:flex-col h-full`}>
+            <div className={`fixed inset-y-0 left-0 bg-white text-black p-6 w-64 h-screen shadow transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out md:relative md:flex md:flex-col h-full`}>
                 {isOpen && (
                     <h2 className="sidebar-title text-2xl font-bold mb-6 text-red-500">Merchant Dashboard</h2>
                 )}
