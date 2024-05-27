@@ -6,7 +6,7 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import clsx from 'clsx';
 import axios from 'axios'; // Import axios for HTTP requests
-import ClerkSideBar from './ClerkSideBar';
+import ClerkSideBar from './ClerkSideBar'; // Import the ClerkSideBar component
 
 // Define the base URL for the API
 export const BASE_URL = 'http://127.0.0.1:5000';
@@ -51,78 +51,91 @@ export default function AddProducts() {
   };
 
   return (
-    <StyledDiv>
-      <form onSubmit={handleSubmit}>
-        <FormControl required>
-          <Label>Name</Label>
-          <StyledInput
-            placeholder="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Price</Label>
-          <StyledInput
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Stock Quantity</Label>
-          <StyledInput
-            placeholder="Stock Quantity"
-            value={stockQuantity}
-            onChange={(e) => setStockQuantity(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Buying Price</Label>
-          <StyledInput
-            placeholder="Buying Price"
-            value={buyingPrice}
-            onChange={(e) => setBuyingPrice(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Selling Price</Label>
-          <StyledInput
-            placeholder="Selling Price"
-            value={sellingPrice}
-            onChange={(e) => setSellingPrice(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Store ID</Label>
-          <StyledInput
-            placeholder="Store ID"
-            value={storeId}
-            onChange={(e) => setStoreId(e.target.value)}
-          />
-        </FormControl>
-        <FormControl required>
-          <Label>Image URL (from Google)</Label>
-          <StyledInput
-            placeholder="Image URL (from Google)"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
-        </FormControl>
-        <HelperText />
-        <Button type="submit" variant="contained" disableElevation>
-          Submit
-        </Button>
-      </form>
-    </StyledDiv>
+    <div style={{ display: 'flex' }}>
+      <ClerkSideBar />
+      <StyledContainer>
+        <StyledDiv>
+          <form onSubmit={handleSubmit}>
+            <FormControl required>
+              <Label>Name</Label>
+              <StyledInput
+                placeholder="Product Name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Price</Label>
+              <StyledInput
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Stock Quantity</Label>
+              <StyledInput
+                placeholder="Stock Quantity"
+                value={stockQuantity}
+                onChange={(e) => setStockQuantity(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Buying Price</Label>
+              <StyledInput
+                placeholder="Buying Price"
+                value={buyingPrice}
+                onChange={(e) => setBuyingPrice(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Selling Price</Label>
+              <StyledInput
+                placeholder="Selling Price"
+                value={sellingPrice}
+                onChange={(e) => setSellingPrice(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Store ID</Label>
+              <StyledInput
+                placeholder="Store ID"
+                value={storeId}
+                onChange={(e) => setStoreId(e.target.value)}
+              />
+            </FormControl>
+            <FormControl required>
+              <Label>Image URL (from Google)</Label>
+              <StyledInput
+                placeholder="Image URL (from Google)"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+              />
+            </FormControl>
+            <HelperText />
+            <Button type="submit" variant="contained" disableElevation>
+              Submit
+            </Button>
+          </form>
+        </StyledDiv>
+      </StyledContainer>
+    </div>
   );
 }
+
+const StyledContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 250px); // Adjust width to leave space for the sidebar
+  margin-left: 250px; // Offset to center the content with respect to the sidebar
+`;
 
 const StyledDiv = styled('div')`
   background-color: #DAECFF;
   padding: 16px;
-  max-width: 360px;
-  margin: 50px auto; /* Added top margin */
+  width: 50%; /* Increased size by 25% */
+  margin: 50px auto; /* Center horizontally */
   border-radius: 8px;
   box-sizing: border-box;
   max-height: 90vh; /* Ensure the container fits within the viewport */

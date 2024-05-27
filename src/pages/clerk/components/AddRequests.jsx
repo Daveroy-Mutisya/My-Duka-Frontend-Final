@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import ClerkSideBar from './ClerkSideBar'; // Import AdminSideBar
+import ClerkSideBar from './ClerkSideBar'; 
 
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
