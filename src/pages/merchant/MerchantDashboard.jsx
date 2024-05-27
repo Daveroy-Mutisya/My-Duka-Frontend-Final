@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
+import MerchantSideBar from './MerchantSideBar'; // Import the MerchantSideBar component
+
+const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 export default function MerchantDashboard() {
     const [stores, setStores] = useState([]);
-    const [selectedStore, setSelectedStore] = useState(null);
-    const [products, setProducts] = useState([]);
-    const [payments, setPayments] = useState([]);
-    const [requests, setRequests] = useState([]);
+    const [error, setError] = useState('');
+    const navigate = useNavigate(); // Use the useNavigate hook from react-router-dom
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch(`http://127.0.0.1:5000//stores`, {
+        fetch(`${BASE_URL}/stores`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -28,105 +31,48 @@ export default function MerchantDashboard() {
                 console.error('Unexpected response format:', data);
             }
         })
-        .catch(error => console.error('Error fetching stores:', error));
+        .catch(error => {
+            console.error('Error fetching stores:', error);
+            setError('Failed to fetch stores');
+        });
     }, []);
 
-    const handleStoreSelect = (storeId) => {
-        setSelectedStore(storeId);
-
-        const token = localStorage.getItem('token');
-
-        // Fetch products for the selected store
-        fetch(`http://127.0.0.1:5000/stores/${storeId}/products`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        })
-        .then(data => setProducts(data))
-        .catch(error => console.error('Error fetching products:', error));
-
-        // Fetch payments for the selected store
-        fetch(`http://127.0.0.1:5000/stores/${storeId}/payments`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        })
-        .then(data => setPayments(data))
-        .catch(error => console.error('Error fetching payments:', error));
-
-        // Fetch requests for the selected store
-        fetch(`http://127.0.0.1:5000/stores/${storeId}/requests`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        })
-        .then(data => setRequests(data.requests))
-        .catch(error => console.error('Error fetching requests:', error));
+    const handleStoreClick = (storeId) => {
+        navigate(`/merchant/storedetails/${storeId}`);
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Merchant Dashboard</h2>
-            <div className="mb-4">
-                <label htmlFor="store-select" className="block text-sm font-medium text-gray-700">Select Store</label>
-                <select
-                    id="store-select"
-                    onChange={(e) => handleStoreSelect(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                    <option value="">Select a store</option>
-                    {stores.map((store) => (
-                        <option key={store.id} value={store.id}>
-                            {store.name}
-                        </option>
-                    ))}
-                </select>
+        <div className="flex w-full h-screen">
+            <div className="flex-none">
+                <MerchantSideBar />
             </div>
-            {selectedStore && (
-                <div>
-                    <h3 className="text-xl font-bold mb-2">Products</h3>
-                    <ul>
-                        {products.map((product) => (
-                            <li key={product.id}>{product.name}</li>
-                        ))}
-                    </ul>
-                    <h3 className="text-xl font-bold mb-2">Payments</h3>
-                    <ul>
-                        {payments.map((payment) => (
-                            <li key={payment.id}>{payment.method}: {payment.amount}</li>
-                        ))}
-                    </ul>
-                    <h3 className="text-xl font-bold mb-2">Requests</h3>
-                    <ul>
-                        {requests.map((request) => (
-                            <li key={request.id}>
-                                {request.product_name} - {request.quantity} - {request.status}
-                            </li>
-                        ))}
-                    </ul>
+            <div className="flex-grow flex flex-col items-center justify-center" style={{ marginTop: '-150px' }}>
+                <div className="invite-admin-container-lg flex flex-col items-center justify-center  m-0.5" style={{ width: '600px' }}>
+                    <h2 className="invite-admin-title text-2xl mb-4 font-bold">Merchant Dashboard</h2>
+                    {error && <p className="text-red-500">{error}</p>}
+                    <table className="min-w-full bg-white shadow-md rounded-lg">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4 border-b">Store Name</th>
+                                <th className="py-2 px-4 border-b">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {stores.map(store => (
+                                <tr key={store.id} className="cursor-pointer" onClick={() => handleStoreClick(store.id)}>
+                                    <td className="py-2 px-4 border-b">{store.name}</td>
+                                    <td className="py-2 px-4 border-b">{store.location}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            )}
+            </div>
         </div>
     );
 }
+
+
+
+
+ 

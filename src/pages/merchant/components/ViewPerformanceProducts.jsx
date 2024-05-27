@@ -5,7 +5,7 @@ import MerchantSideBar from "../MerchantSideBar";
 
 export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
-function ViewPerformance() {
+function ViewPerformanceProduct() {
     const { store_id } = useParams();
     const [performance, setPerformance] = useState(null);
     const [error, setError] = useState('');
@@ -15,7 +15,7 @@ function ViewPerformance() {
     useEffect(() => {
         const fetchPerformance = async () => {
             try {
-                const response = await fetch(`https://deploying-myduka-backend.onrender.com/store/1/performance/store`, {
+                const response = await fetch(`https://deploying-myduka-backend.onrender.com/store/1/performance/product`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -75,29 +75,24 @@ function ViewPerformance() {
     }, [performance]);
 
     return (
-        <div className="flex">
-            <MerchantSideBar />
-            <div className="flex-grow">
-                <div className="container mx-auto flex flex-col h-full px-4 py-8">
-                    <h1 className="text-4xl font-bold mb-4">Store Performance</h1>
-                    {error && <p className="text-red-500">{error}</p>}
-                    {performance ? (
-                        <div className="flex-grow bg-white shadow-md rounded-lg p-4">
-                            <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
-                            <canvas id="performanceChart" ref={chartRef}></canvas>
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
+        <div className="flex flex-col lg:flex-row">
+        <MerchantSideBar />
+        <div className="flex-grow">
+            <div className="container mx-auto flex flex-col px-4 py-8">
+                <h1 className="text-4xl font-bold mb-4">Product Performance</h1>
+                {error && <p className="text-red-500">{error}</p>}
+                {performance ? (
+                    <div className="bg-white shadow-md rounded-lg p-4">
+                        <h2 className="text-2xl font-bold mb-4">{performance.store_name}</h2>
+                        <canvas id="performanceChart" ref={chartRef}></canvas>
+                    </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
             </div>
         </div>
+    </div>
     );
 }
 
-export default ViewPerformance;
-
-
-
-
-
+export default ViewPerformanceProduct;

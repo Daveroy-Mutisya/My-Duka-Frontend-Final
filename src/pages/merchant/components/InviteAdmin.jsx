@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MerchantSideBar from '../MerchantSideBar';
 
 const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
@@ -40,7 +41,7 @@ const InviteAdmin = () => {
             });
     
             if (!inviteResponse.ok) {
-                throw new Error('Admin invited successfully');
+                throw new Error('Admin invited successfully!');
             }
     
             setMessage('Admin invited successfully');
@@ -52,41 +53,47 @@ const InviteAdmin = () => {
     };
     
     return (
-        <div className="invite-admin-container">
-            <h2 className="invite-admin-title text-2xl mb-4">Invite Admin</h2>
-            <form onSubmit={handleInvite} className="invite-admin-form">
-                <div className="form-group mb-4">
-                    <label htmlFor="email" className="form-label block">Admin Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-input w-full"
-                        required
-                    />
+        <div className="flex">
+            <MerchantSideBar />
+            <div className="flex-grow flex items-center justify-center">
+                <div className="max-w-lg p-4">
+                    <h2 className="text-2xl font-bold mb-4">Invite an Admin</h2>
+                    <form onSubmit={handleInvite} className="space-y-4">
+                        <div className="form-group">
+                            <label htmlFor="email" className="block font-bold text-red-600">Admin Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="form-input w-full border border-gray-300 rounded-[4px] focus:border-red-700 font-semibold"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="storeId" className="block font-bold text-red-600">Store ID</label>
+                            <input
+                                type="text"
+                                id="storeId"
+                                value={storeId}
+                                onChange={(e) => setStoreId(e.target.value)}
+                                className="form-input w-full border border-gray-300 rounded-[4px] focus:border-red-700 font-semibold"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="bg-black text-white font-semibold px-4 py-2 rounded-[4px] hover:bg-red-700">
+                                Send Invite
+                            </button>
+                        </div>
+                    </form>
+                    {message && <p className="text-lime-700 font-bold">{message}</p>}
+                    {error && <p className="text-red-600 font-bold">{error}</p>}
                 </div>
-                <div className="form-group mb-4">
-                    <label htmlFor="storeId" className="form-label block">Store ID</label>
-                    <input
-                        type="text"
-                        id="storeId"
-                        value={storeId}
-                        onChange={(e) => setStoreId(e.target.value)}
-                        className="form-input w-full"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="invite-admin-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Send Invite
-                    </button>
-                </div>
-            </form>
-            {message && <p className="invite-admin-message invite-admin-success text-green-500">{message}</p>}
-            {error && <p className="invite-admin-message invite-admin-error text-red-500">{error}</p>}
+            </div>
         </div>
     );
 };
 
 export default InviteAdmin;
+
