@@ -1,47 +1,101 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
 
-function ClerkSideBar({ isOpen, toggleSidebar }) {
-  return (
-    <div>
-      <div className="md:hidden p-4 bg-white text-black flex justify-between items-center">
-        <button onClick={toggleSidebar} className="text-black">
-          {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
-        </button>
-      </div>
-      <div className={`fixed inset-y-0 left-0 bg-white text-black p-6 w-64 h-screen shadow-lg z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out md:relative md:flex md:flex-col h-full`}>
-        <h2 className="sidebar-title text-2xl font-bold mb-6 text-red-500">Merchant Dashboard</h2>
-        <ul className="sidebar-menu space-y-4">
-          <li className="sidebar-item">
-            <Link to="/merchant/dashboard" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-              Home
-            </Link>
-          </li>
-          <li className="sidebar-item">
-            <Link to="/merchant/view-performance" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-              View Performance
-            </Link>
-          </li>
-          <li className="sidebar-item">
-            <Link to="/merchant/stores" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-              Store
-            </Link>
-          </li>
-          <li className="sidebar-item">
-            <Link to="/merchant/register" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-              Invite Admin
-            </Link>
-          </li>
-          <li class="sidebar-item">
-            <Link to="/merchant/admin-management" className="sidebar-link block py-2 px-4 font-semibold rounded hover:bg-red-700 transition duration-300" onClick={toggleSidebar}>
-              Admin Management
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
+const ClerkSideBar = () => {
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsCollapsed(!isCollapsed);
+    };
+
+    return (
+        <div>
+            <IconButton onClick={toggleSidebar} style={{
+                position: 'fixed',
+                top: '1rem',
+                left: '1rem',
+                zIndex: 1000,
+                color: 'Black'
+            }}>
+                <MenuIcon />
+            </IconButton>
+            <div style={{
+                width: isCollapsed ? '0' : '250px',
+                height: '100vh',
+                backgroundColor: '#1a202c',
+                color: 'white',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: isCollapsed ? '0' : '2rem 1rem',
+                boxShadow: isCollapsed ? 'none' : '2px 0 5px rgba(0, 0, 0, 0.1)',
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                overflow: 'hidden',
+                transition: 'width 0.3s ease',
+                zIndex: 999
+            }}>
+                {!isCollapsed && (
+                    <>
+                        <h2 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: '800',
+                            marginBottom: '2rem'
+                        }}>Clerk PANEL</h2>
+                        <nav style={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem'
+                        }}>
+                            <Link to="/clerk/dashboard" style={{
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: '0.375rem',
+                                textAlign: 'center',
+                                textDecoration: 'none',
+                                color: 'white',
+                                backgroundColor: '#e53e3e',
+                                fontSize: '1rem',
+                                fontWeight: '500',
+                                transition: 'background-color 0.3s ease'
+                            }}>
+                                Home
+                            </Link>
+                            <Link to="/clerk/register-product" style={{
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: '0.375rem',
+                                textAlign: 'center',
+                                textDecoration: 'none',
+                                color: 'white',
+                                backgroundColor: '#e53e3e',
+                                fontSize: '1rem',
+                                fontWeight: '500',
+                                transition: 'background-color 0.3s ease'
+                            }}>
+                                Add Product 
+                            </Link>
+                            <Link to="/admin/add-clerk" style={{
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: '0.375rem',
+                                textAlign: 'center',
+                                textDecoration: 'none',
+                                color: 'white',
+                                backgroundColor: '#e53e3e',
+                                fontSize: '1rem',
+                                fontWeight: '500',
+                                transition: 'background-color 0.3s ease'
+                            }}>
+                                Add Requests 
+                            </Link>
+                        </nav>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
 
 export default ClerkSideBar;

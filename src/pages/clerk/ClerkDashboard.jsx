@@ -10,18 +10,17 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ClerkSideBar from './components/ClerkSideBar';
+import ClerkSideBar from './components/ClerkSideBar'; // Import the ClerkSideBar component
 
-export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
+// Define the base URL for the API
+export const BASE_URL = 'http://127.0.0.1:5000';
 
 export default function ClerkDashboard() {
+  // State hook to store the list of products
   const [products, setProducts] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false); // Define isCollapsed state
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
+  // Effect hook to fetch products when the component mounts
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -64,79 +63,57 @@ export default function ClerkDashboard() {
     });
   };
 
+  // Styles for the component
   const styles = {
     container: {
-      display: 'flex',
-    },
-    sidebar: {
-      width: '250px',
-      flexShrink: 0,
-    },
-    mainContent: {
-      flexGrow: 1,
-      padding: '20px',
-      maxWidth: '100%',
-      overflowX: 'hidden',
-      marginLeft: sidebarOpen ? '0' : '0', // Ensure main content is full width when sidebar is closed
-      transition: 'margin-left 0.3s ease',
+      padding: "20px",
+      maxWidth: "100%",
+      overflowX: "hidden",
+      marginLeft: isCollapsed ? "0" : "250px", // Use isCollapsed state to set marginLeft
+      transition: "margin-left 0.3s ease",
     },
     header: {
-      marginBottom: '20px',
+      marginBottom: "20px",
     },
     headerInner: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: 'black',
-      color: 'white',
-      padding: '10px',
-      borderRadius: '5px',
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: "black", // Set the container color to black
+      color: "white",
+      padding: "10px",
+      borderRadius: "5px"
     },
     headerTitle: {
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    button: {
-      cursor: 'pointer',
-      textDecoration: 'none',
-    },
-    table: {
-      backgroundColor: '#f5f5f5',
-    },
-    tableHeader: {
-      backgroundColor: '#e0e0e0',
-    },
-    tableCell: {
-      color: '#333',
-    },
-    deleteButton: {
-      color: '#b91c1c',
+      fontWeight: "bold",
+      color: "white" // Set the text color of "My Products" to white
     },
     addButton: {
-      backgroundColor: '#b91c1c',
-      color: 'white',
-      borderRadius: '8px',
-      padding: '8px 16px',
+      backgroundColor: "#b91c1c", // Set the "Add Product" button color to red-700
+      color: "white",
+      borderRadius: "8px",
+      padding: "8px 16px",
       '&:hover': {
-        backgroundColor: '#991b1b',
-      },
+        backgroundColor: "#991b1b" // Darker red for hover state
+      }
     },
+    deleteButton: {
+      color: "#ff0000" // Red color for delete button
+    }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.sidebar}>
-        <ClerkSideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      </div>
-
-      <div style={{ ...styles.mainContent, marginLeft: sidebarOpen ? '250px' : '0' }}>
+    <div>
+      <ClerkSideBar setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed}/> {/* Include the sidebar component */}
+      <div style={styles.container}>
+        {/* Header section with a title and a button to add a new product */}
         <div style={styles.header}>
           <div style={styles.headerInner}>
             <div style={styles.headerTitle}>My Products</div>
-            <Link to="/clerk/register-product" style={{ textDecoration: 'none' }}>
+            <Link to="/clerk/register-product" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
-                sx={styles.addButton}
+                sx={styles.addButton} // Apply red color to the button
               >
                 Add Product
               </Button>
@@ -144,6 +121,7 @@ export default function ClerkDashboard() {
           </div>
         </div>
 
+        {/* Table to display the list of products */}
         <TableContainer component={Paper}>
           <Table sx={styles.table} aria-label="simple table">
             <TableHead sx={styles.tableHeader}>
@@ -159,6 +137,7 @@ export default function ClerkDashboard() {
               </TableRow>
             </TableHead>
             <TableBody>
+              {/* Map over the products and create a table row for each product */}
               {products.map((product) => (
                 <TableRow
                   key={product.id}
@@ -176,9 +155,9 @@ export default function ClerkDashboard() {
                     <img src={product.image} alt="product image" width="50px" />
                   </TableCell>
                   <TableCell align="center" sx={styles.tableCell}>
-                    <IconButton
-                      onClick={() => handleDelete(product.store_id, product.id)}
-                      sx={styles.deleteButton}
+                    <IconButton 
+                      onClick={() => handleDelete(product.store_id, product.id)} 
+                      sx={styles.deleteButton} // Apply red color to delete button
                     >
                       <DeleteIcon />
                     </IconButton>
