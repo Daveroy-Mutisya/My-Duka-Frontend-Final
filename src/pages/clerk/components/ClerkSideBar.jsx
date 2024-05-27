@@ -66,19 +66,7 @@ const ClerkSideBar = () => {
                     transition: 'background-color 0.3s ease'
                 }}>
                     Request
-                </Link>
-                <Link to="/admin/add-payments" style={{
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '0.375rem',
-                    textAlign: 'center',
-                    textDecoration: 'none',
-                    color: 'white',
-                    backgroundColor: '#e53e3e',
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                    transition: 'background-color 0.3s ease'
-                }}>
-                    Add Payment
+                
                 </Link>
             </nav>
         </div>
