@@ -53,7 +53,7 @@ const InviteAdmin = () => {
     };
     
     return (
-        <div className="flex">
+        <div className="flex" >
             <MerchantSideBar />
             <div className="flex-grow flex items-center justify-center">
                 <div className="max-w-lg p-4">

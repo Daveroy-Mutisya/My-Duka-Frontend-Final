@@ -77,7 +77,7 @@ const AdminManagement = () => {
             <div className="flex-grow">
                 <div className="container mx-auto p-4 md:w-3/4 lg:w-2/4 border border-gray-100 rounded-[12px]">
                     <div className="container mx-auto p-4 flex items-center justify-center">
-                        <h1 className="text-4xl font-darker-grotesque mb-4">Admin Management</h1>
+                        <h1 className="text-4xl font-darker-grotesque mb-4 font-bold">Admin Management</h1>
                     </div>
                     {error && <p className="text-red-600">{error}</p>}
                     {message && <p className="text-red-600">{message}</p>}
