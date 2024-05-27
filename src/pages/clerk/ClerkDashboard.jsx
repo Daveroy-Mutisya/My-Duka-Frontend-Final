@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,113 +7,188 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'; // Import MUI Button
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ClerkSideBar from './components/ClerkSideBar';
 
-function createData(name, price, stock_quantity, buying_price, selling_price, store_id, image) {
-  return { name, price, stock_quantity, buying_price, selling_price, store_id, image };
-}
-
-const rows = [
-  createData('Product Name 1', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 2', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 3', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 4', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 5', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-  createData('Product Name 6', 99.99, 100, 50.00, 99.99, 'Store_123', 'path_to_image'),
-];
+export const BASE_URL = 'https://deploying-myduka-backend.onrender.com';
 
 export default function ClerkDashboard() {
+  const [products, setProducts] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch(`${BASE_URL}/store/products`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setProducts(data);
+    })
+    .catch(error => {
+      console.error('Error fetching products:', error);
+    });
+  }, []);
+
+  const handleDelete = (storeId, productId) => {
+    const token = localStorage.getItem('token');
+
+    fetch(`${BASE_URL}/store/${storeId}/products/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setProducts(products.filter(product => product.id !== productId));
+    })
+    .catch(error => {
+      console.error('Error deleting product:', error);
+    });
+  };
+
   const styles = {
     container: {
-      padding: "20px",
-      maxWidth: "100%",
-      overflowX: "hidden"
+      display: 'flex',
+    },
+    sidebar: {
+      width: '250px',
+      flexShrink: 0,
+    },
+    mainContent: {
+      flexGrow: 1,
+      padding: '20px',
+      maxWidth: '100%',
+      overflowX: 'hidden',
+      marginLeft: sidebarOpen ? '0' : '0', // Ensure main content is full width when sidebar is closed
+      transition: 'margin-left 0.3s ease',
     },
     header: {
-      marginBottom: "20px",
+      marginBottom: '20px',
     },
     headerInner: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      backgroundColor: "#2196f3",
-      color: "white",
-      padding: "10px",
-      borderRadius: "5px"
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: 'black',
+      color: 'white',
+      padding: '10px',
+      borderRadius: '5px',
+    },
+    headerTitle: {
+      fontWeight: 'bold',
+      color: 'white',
     },
     button: {
-      cursor: "pointer",
-      textDecoration: "none"
+      cursor: 'pointer',
+      textDecoration: 'none',
     },
     table: {
-      backgroundColor: "#f5f5f5", // Light grey background for the table
+      backgroundColor: '#f5f5f5',
     },
     tableHeader: {
-      backgroundColor: "#e0e0e0", // Slightly darker grey for the header
+      backgroundColor: '#e0e0e0',
     },
     tableCell: {
-      color: "#333", // Dark grey text color for better contrast
+      color: '#333',
+    },
+    deleteButton: {
+      color: '#b91c1c',
+    },
+    addButton: {
+      backgroundColor: '#b91c1c',
+      color: 'white',
+      borderRadius: '8px',
+      padding: '8px 16px',
+      '&:hover': {
+        backgroundColor: '#991b1b',
+      },
     },
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.header}>
-        <div style={styles.headerInner}>
-          <div style={{ fontWeight: "bold" }}>My Products</div>
-          <Link to="/clerk/register-product" style={{ textDecoration: "none" }}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#007FFF",
-                color: "white",
-                borderRadius: "8px",
-                padding: "8px 16px",
-                '&:hover': {
-                  backgroundColor: "#0066CC"
-                }
-              }}
-            >
-              Add Product
-            </Button>
-          </Link>
-        </div>
+      <div style={styles.sidebar}>
+        <ClerkSideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      <TableContainer component={Paper}>
-        <Table sx={styles.table} aria-label="simple table">
-          <TableHead sx={styles.tableHeader}>
-            <TableRow>
-              <TableCell sx={styles.tableCell}>Name</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Stock Quantity</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Buying Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Selling Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Store ID</TableCell>
-              <TableCell align="center" sx={styles.tableCell}>Image</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+
+      <div style={{ ...styles.mainContent, marginLeft: sidebarOpen ? '250px' : '0' }}>
+        <div style={styles.header}>
+          <div style={styles.headerInner}>
+            <div style={styles.headerTitle}>My Products</div>
+            <Link to="/clerk/register-product" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="contained"
+                sx={styles.addButton}
               >
-                <TableCell component="th" scope="row" sx={styles.tableCell}>
-                  {row.name}
-                </TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.stock_quantity}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.buying_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.selling_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{row.store_id}</TableCell>
-                <TableCell align="center" sx={styles.tableCell}>
-                  <img src={row.image} alt="product image" width="50px" />
-                </TableCell>
+                Add Product
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        <TableContainer component={Paper}>
+          <Table sx={styles.table} aria-label="simple table">
+            <TableHead sx={styles.tableHeader}>
+              <TableRow>
+                <TableCell sx={styles.tableCell}>Name</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Stock Quantity</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Buying Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Selling Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Store ID</TableCell>
+                <TableCell align="center" sx={styles.tableCell}>Image</TableCell>
+                <TableCell align="center" sx={styles.tableCell}>Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {products.map((product) => (
+                <TableRow
+                  key={product.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" sx={styles.tableCell}>
+                    {product.name}
+                  </TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.stock_quantity}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.buying_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.selling_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.store_id}</TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>
+                    <img src={product.image} alt="product image" width="50px" />
+                  </TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>
+                    <IconButton
+                      onClick={() => handleDelete(product.store_id, product.id)}
+                      sx={styles.deleteButton}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }
