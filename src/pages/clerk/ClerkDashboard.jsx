@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ResponsiveAppBar from './components/ClerkNavBar';
 
 // Define the base URL for the API
-export const BASE_URL = 'https://deploying-myduka-backend.onrender.com/';
+export const BASE_URL = 'http://127.0.0.1:5000';
 
 export default function ClerkDashboard() {
   // State hook to store the list of products
@@ -112,68 +113,71 @@ export default function ClerkDashboard() {
   };
 
   return (
-    <div style={styles.container}>
-      {/* Header section with a title and a button to add a new product */}
-      <div style={styles.header}>
-        <div style={styles.headerInner}>
-          <div style={styles.headerTitle}>My Products</div>
-          <Link to="/clerk/register-product" style={{ textDecoration: "none" }}>
-            <Button
-              variant="contained"
-              sx={styles.addButton} // Apply red color to the button
-            >
-              Add Product
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Table to display the list of products */}
-      <TableContainer component={Paper}>
-        <Table sx={styles.table} aria-label="simple table">
-          <TableHead sx={styles.tableHeader}>
-            <TableRow>
-              <TableCell sx={styles.tableCell}>Name</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Stock Quantity</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Buying Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Selling Price ($)</TableCell>
-              <TableCell align="right" sx={styles.tableCell}>Store ID</TableCell>
-              <TableCell align="center" sx={styles.tableCell}>Image</TableCell>
-              <TableCell align="center" sx={styles.tableCell}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* Map over the products and create a table row for each product */}
-            {products.map((product) => (
-              <TableRow
-                key={product.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    <>
+      <ResponsiveAppBar /> {/* Include the ResponsiveAppBar at the top */}
+      <div style={styles.container}>
+        {/* Header section with a title and a button to add a new product */}
+        <div style={styles.header}>
+          <div style={styles.headerInner}>
+            <div style={styles.headerTitle}>My Products</div>
+            <Link to="/clerk/register-product" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={styles.addButton} // Apply red color to the button
               >
-                <TableCell component="th" scope="row" sx={styles.tableCell}>
-                  {product.name}
-                </TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{product.price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{product.stock_quantity}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{product.buying_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{product.selling_price}</TableCell>
-                <TableCell align="right" sx={styles.tableCell}>{product.store_id}</TableCell>
-                <TableCell align="center" sx={styles.tableCell}>
-                  <img src={product.image} alt="product image" width="50px" />
-                </TableCell>
-                <TableCell align="center" sx={styles.tableCell}>
-                  <IconButton 
-                    onClick={() => handleDelete(product.store_id, product.id)} 
-                    sx={styles.deleteButton} // Apply red color to delete button
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+                Add Product
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Table to display the list of products */}
+        <TableContainer component={Paper}>
+          <Table sx={styles.table} aria-label="simple table">
+            <TableHead sx={styles.tableHeader}>
+              <TableRow>
+                <TableCell sx={styles.tableCell}>Name</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Stock Quantity</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Buying Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Selling Price ($)</TableCell>
+                <TableCell align="right" sx={styles.tableCell}>Store ID</TableCell>
+                <TableCell align="center" sx={styles.tableCell}>Image</TableCell>
+                <TableCell align="center" sx={styles.tableCell}>Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </TableHead>
+            <TableBody>
+              {/* Map over the products and create a table row for each product */}
+              {products.map((product) => (
+                <TableRow
+                  key={product.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" sx={styles.tableCell}>
+                    {product.name}
+                  </TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.stock_quantity}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.buying_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.selling_price}</TableCell>
+                  <TableCell align="right" sx={styles.tableCell}>{product.store_id}</TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>
+                    <img src={product.image} alt="product image" width="50px" />
+                  </TableCell>
+                  <TableCell align="center" sx={styles.tableCell}>
+                    <IconButton 
+                      onClick={() => handleDelete(product.store_id, product.id)} 
+                      sx={styles.deleteButton} // Apply red color to delete button
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
   );
 }
